@@ -21,17 +21,11 @@ const aircraftPhotos = [
   }
 ];
 const aircraftPhoto = document.getElementById('aircraft-photo');
-const aircraftCredit = document.getElementById('aircraft-credit');
-const aircraftCreditSource = document.getElementById('aircraft-credit-source');
 
 function updateAircraftPhoto(index) {
   const photo = aircraftPhotos[index];
   aircraftPhoto.src = 'assets/' + photo.file;
   aircraftPhoto.alt = photo.alt;
-  aircraftCredit.hidden = !photo.source;
-  aircraftCreditSource.textContent = photo.author || '';
-  if (photo.source) aircraftCreditSource.href = photo.source;
-  else aircraftCreditSource.removeAttribute('href');
 }
 const tabs=[...document.querySelectorAll('[data-aircraft]')];function selectAircraft(i){updateAircraftPhoto(i);tabs.forEach((t,j)=>{t.setAttribute('aria-selected',i===j);t.tabIndex=i===j?0:-1});const a=aircraft[i];['aircraft-name','aircraft-category','aircraft-description','aircraft-mission','aircraft-use'].forEach((id,j)=>document.getElementById(id).textContent=a[j]);document.getElementById('aircraft-panel').setAttribute('aria-labelledby',tabs[i].id)}tabs.forEach((t,i)=>{t.addEventListener('click',()=>selectAircraft(i));t.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%4;if(e.key==='ArrowLeft')n=(i+3)%4;if(e.key==='Home')n=0;if(e.key==='End')n=3;if(n!==undefined){e.preventDefault();selectAircraft(n);tabs[n].focus()}})});
 const regions=[['GULF COUNTRIES','Cargo charter coordination across the Gulf, supported by our UAE operations.'],['TURKEY','Cargo charter coordination between Turkey and our UAE operations.'],['CHINA','Aircraft capacity and charter coordination for cargo to and from China.'],['AFRICA','Cargo charter coordination across Africa, supported by our UAE operations.'],['CIS COUNTRIES','Cargo charter coordination for the CIS markets we serve.']];const regionBtns=[...document.querySelectorAll('[data-region]')];function selectRegion(i){regionBtns.forEach((b,j)=>{b.classList.toggle('active',j===i);b.setAttribute('aria-pressed',i===j)});document.getElementById('region-label').textContent=regions[i][0];document.getElementById('region-copy').textContent=regions[i][1];document.querySelectorAll('#route-lines path').forEach((p,j)=>p.classList.toggle('active',i===j))}regionBtns.forEach((b,i)=>b.addEventListener('click',()=>selectRegion(i)));selectRegion(0);
