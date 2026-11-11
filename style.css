@@ -231,26 +231,7 @@ img,svg{max-width:100%}.hero-plane{max-width:none}.form-grid>*{min-width:0}input
 .hero-real .hero-bottom .frame-number {
   display: none;
 }
-.cargo-photo-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(16px, 3vw, 38px);
-  margin-top: clamp(32px, 5vw, 72px);
-}
-.cargo-photo-grid figure { margin: 0; }
-.cargo-photo-grid img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  border-radius: 5px;
-}
-.cargo-photo-grid figcaption {
-  margin-top: 12px;
-  font-size: 13px;
-  color: #c6d2c8;
-}
+
 @media (max-width: 900px) {
   .hero.hero-real { height: auto; min-height: 0; max-height: none; }
   .flight-sequence:has(.hero-real) { height: auto; }
@@ -266,7 +247,6 @@ img,svg{max-width:100%}.hero-plane{max-width:none}.form-grid>*{min-width:0}input
 }
 @media (max-width: 540px) {
   .hero-real h1 { font-size: clamp(34px, 9vw, 48px); }
-  .cargo-photo-grid { grid-template-columns: 1fr; }
 }
 
 /* The cutout shares the hero background and keeps the whole ramp in frame. */
@@ -357,3 +337,31 @@ img,svg{max-width:100%}.hero-plane{max-width:none}.form-grid>*{min-width:0}input
 .hero.hero-real{top:0;min-height:600px;height:calc(100svh - 116px)}
 .hero-real .hero-photo::after{mask-image:none;-webkit-mask-image:none;border-radius:0;transform:none;mix-blend-mode:normal;background-size:auto}
 @media(max-width:600px){.hero.hero-real{height:calc(100svh - 82px);min-height:690px}}
+
+/* Operations photography bridges the company introduction and services. */
+.about-photos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: clamp(14px, 2vw, 28px);
+  margin-top: clamp(36px, 6vw, 84px);
+}
+.about-photos figure { margin: 0; min-width: 0; }
+.about-photos img {
+  display: block;
+  width: 100%;
+  height: clamp(230px, 31vw, 480px);
+  object-fit: cover;
+  border-radius: 5px;
+  background: #d8e0d5;
+}
+.about-photos figcaption {
+  margin-top: 10px;
+  color: #46564a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.about-photos + .about-business { margin-top: clamp(36px, 5vw, 68px); }
+@media (max-width: 600px) {
+  .about-photos { grid-template-columns: 1fr; gap: 24px; }
+  .about-photos img { height: auto; aspect-ratio: 3 / 2; }
+}
