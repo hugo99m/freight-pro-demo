@@ -262,40 +262,47 @@ img,svg{max-width:100%}.hero-plane{max-width:none}.form-grid>*{min-width:0}input
   object-fit: contain;
   object-position: center;
 }
+/* Keep the original 3:2 frame visible and pair it with the aircraft details. */
 .aircraft-panel {
-  row-gap: clamp(24px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.72fr);
+  grid-template-rows: auto auto;
+  column-gap: clamp(28px, 5vw, 88px);
+  row-gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+  min-height: 0;
+  padding-top: clamp(24px, 3.5vw, 54px);
 }
 .aircraft-photo {
-  grid-column: 1 / -1;
+  grid-area: 1 / 2 / 3 / 3;
+  align-self: center;
   margin: 0;
 }
 .aircraft-photo img {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 520px;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: center 46%;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
   border-radius: 5px;
   background: #213d2e;
 }
-.aircraft-photo figcaption {
-  margin-top: 9px;
-  font-size: 11px;
-  line-height: 1.5;
-  color: #c6d2c8;
+.aircraft-type { grid-area: 1 / 1; }
+.aircraft-panel .capability { grid-area: 2 / 1; margin: 0; }
+.aircraft-panel .aircraft-name {
+  font-size: clamp(40px, 5.5vw, 104px);
+  letter-spacing: -.055em;
 }
-.aircraft-photo a { text-decoration: underline; }
+@media (max-width: 760px) {
+  .aircraft-panel { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .aircraft-photo, .aircraft-type, .aircraft-panel .capability { grid-area: auto; }
+  .aircraft-panel .aircraft-name { font-size: clamp(42px, 10vw, 72px); }
+}
 @media (max-width: 900px) {
   .hero-real .hero-photo {
     inset: auto;
     margin: 0 12px;
   }
-}
-@media (max-width: 700px) {
-  .aircraft-photo { margin-bottom: 26px; }
-  .aircraft-photo img { aspect-ratio: 3 / 2; }
 }
 
 /* A single photographic stage: natural light, grounded aircraft, quiet typography. */
