@@ -375,3 +375,7 @@ img,svg{max-width:100%}.hero-plane{max-width:none}.form-grid>*{min-width:0}input
 @media (max-width: 600px) {
   .about-photos { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 }
+
+/* Boeing 747 cargo loading photograph on the homepage. */
+.hero-real .hero-photo-image { object-position: 57% top; }
+@media(max-width:600px){ .hero-real .hero-photo-image { object-position: 61% center; } }
