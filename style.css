@@ -379,3 +379,16 @@ img,svg{max-width:100%}.hero-plane{max-width:none}.form-grid>*{min-width:0}input
 /* Boeing 747 cargo loading photograph on the homepage. */
 .hero-real .hero-photo-image { object-position: 57% top; }
 @media(max-width:600px){ .hero-real .hero-photo-image { object-position: 61% center; } }
+
+/* About us photography lightbox */
+.about-photo-button { display:block; width:100%; padding:0; border:0; border-radius:5px; background:transparent; overflow:hidden; }
+.about-photo-button img { transition:transform .55s cubic-bezier(.22,1,.36,1),filter .55s; }
+@media (hover:hover) { .about-photo-button:hover img { transform:scale(1.025); filter:brightness(.9); } }
+#photo-lightbox { width:min(1200px, 96vw); max-width:none; height:auto; max-height:96dvh; padding:clamp(50px,6vw,68px) clamp(14px,3vw,35px) clamp(18px,3vw,30px); background:#102119; color:#fff; border:1px solid #ffffff33; border-radius:12px; overflow:auto; }
+#photo-lightbox::backdrop { background:rgba(3,13,9,.88); backdrop-filter:blur(10px); }
+#photo-lightbox figure { margin:0; text-align:center; }
+#lightbox-image { display:block; max-width:100%; max-height:calc(96dvh - 145px); width:auto; height:auto; object-fit:contain; margin:0 auto; border-radius:4px; }
+#lightbox-caption { color:#e3eee7; font-size:13px; line-height:1.5; margin-top:14px; }
+.lightbox-close { position:absolute; top:12px; right:16px; display:grid; place-items:center; width:40px; height:40px; padding:0; border:1px solid #ffffff70; border-radius:50%; background:#ffffff18; color:white; font-size:26px; line-height:1; transition:background .25s,transform .25s; }
+.lightbox-close:hover { background:#ffffff30; transform:rotate(90deg); }
+@media(prefers-reduced-motion:reduce) { .about-photo-button img, .lightbox-close { transition:none; } }

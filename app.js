@@ -3,9 +3,8 @@ if(motion){document.documentElement.classList.add('js-motion');const observer=ne
 const hero = document.querySelector('.hero');
 const heroImage = hero.querySelector('.hero-photo-image');
 const menu=document.querySelector('.menu');menu.addEventListener('click',()=>{const open=document.querySelector('header').classList.toggle('menu-open');menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',open?'Close menu':'Open menu');menu.textContent=open?'×':'☰'});document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('header').classList.remove('menu-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open menu');menu.textContent='☰'}));
-const aircraft=[['An-124','OUTSIZE & SUPER-HEAVY','For cargo that challenges conventional dimensions. Project loads, oil & gas equipment and heavy machinery.','Extraordinary dimensions.','Heavy machinery · Project cargo · Oil & gas'],['Il-76','HEAVY & OUTSIZE','Heavy and outsize cargo capacity for regional and medium-haul charter requirements.','Heavy loads. Regional reach.','Outsize cargo · Industrial equipment · Regional charters'],['747-400F','LONG-HAUL & LARGE-VOLUME','Main-deck freighter capacity for long-haul charters and large-volume cargo movements.','Greater volumes. Longer horizons.','Main-deck cargo · Long-haul charters · Large volumes'],['737-800F','REGIONAL & FLEXIBLE','Regional freighter capacity for smaller main-deck loads and focused charter requirements.','Regional routes. Focused capacity.','Regional charters · General cargo · Smaller main-deck loads']];
+const aircraft=[['Il-76','HEAVY & OUTSIZE','Heavy and outsize cargo capacity for regional and medium-haul charter requirements.','Heavy loads. Regional reach.','Outsize cargo · Industrial equipment · Regional charters'],['747-400F','LONG-HAUL & LARGE-VOLUME','Main-deck freighter capacity for long-haul charters and large-volume cargo movements.','Greater volumes. Longer horizons.','Main-deck cargo · Long-haul charters · Large volumes'],['737-800F','REGIONAL & FLEXIBLE','Regional freighter capacity for smaller main-deck loads and focused charter requirements.','Regional routes. Focused capacity.','Regional charters · General cargo · Smaller main-deck loads']];
 const aircraftPhotos = [
-  { file: 'an124-white-ramp-clean.jpg', alt: 'Antonov An-124 with its cargo ramp extended' },
   { file: 'il76-white.jpg', alt: 'Ilyushin Il-76 from behind with its cargo bay open' },
   {
     file: 'boeing-747-400f-white.jpg',
@@ -27,7 +26,7 @@ function updateAircraftPhoto(index) {
   aircraftPhoto.src = 'assets/' + photo.file;
   aircraftPhoto.alt = photo.alt;
 }
-const tabs=[...document.querySelectorAll('[data-aircraft]')];function selectAircraft(i){updateAircraftPhoto(i);tabs.forEach((t,j)=>{t.setAttribute('aria-selected',i===j);t.tabIndex=i===j?0:-1});const a=aircraft[i];['aircraft-name','aircraft-category','aircraft-description','aircraft-mission','aircraft-use'].forEach((id,j)=>document.getElementById(id).textContent=a[j]);document.getElementById('aircraft-panel').setAttribute('aria-labelledby',tabs[i].id)}tabs.forEach((t,i)=>{t.addEventListener('click',()=>selectAircraft(i));t.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%4;if(e.key==='ArrowLeft')n=(i+3)%4;if(e.key==='Home')n=0;if(e.key==='End')n=3;if(n!==undefined){e.preventDefault();selectAircraft(n);tabs[n].focus()}})});
+const tabs=[...document.querySelectorAll('[data-aircraft]')];function selectAircraft(i){updateAircraftPhoto(i);tabs.forEach((t,j)=>{t.setAttribute('aria-selected',i===j);t.tabIndex=i===j?0:-1});const a=aircraft[i];['aircraft-name','aircraft-category','aircraft-description','aircraft-mission','aircraft-use'].forEach((id,j)=>document.getElementById(id).textContent=a[j]);document.getElementById('aircraft-panel').setAttribute('aria-labelledby',tabs[i].id)}tabs.forEach((t,i)=>{t.addEventListener('click',()=>selectAircraft(i));t.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%tabs.length;if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=tabs.length-1;if(n!==undefined){e.preventDefault();selectAircraft(n);tabs[n].focus()}})});
 const regions=[['GULF COUNTRIES','Cargo charter coordination across the Gulf, supported by our UAE operations.'],['TURKEY','Cargo charter coordination between Turkey and our UAE operations.'],['CHINA','Aircraft capacity and charter coordination for cargo to and from China.'],['AFRICA','Cargo charter coordination across Africa, supported by our UAE operations.'],['CIS COUNTRIES','Cargo charter coordination for the CIS markets we serve.']];const regionBtns=[...document.querySelectorAll('[data-region]')];function selectRegion(i){regionBtns.forEach((b,j)=>{b.classList.toggle('active',j===i);b.setAttribute('aria-pressed',i===j)});document.getElementById('region-label').textContent=regions[i][0];document.getElementById('region-copy').textContent=regions[i][1];document.querySelectorAll('#route-lines path').forEach((p,j)=>p.classList.toggle('active',i===j))}regionBtns.forEach((b,i)=>b.addEventListener('click',()=>selectRegion(i)));selectRegion(0);
 const dialog=document.getElementById('request-dialog'),form=document.getElementById('charter-form');let opener;document.querySelectorAll('[data-request]').forEach(b=>b.addEventListener('click',()=>{opener=b;document.getElementById('form-view').hidden=false;document.getElementById('success-view').hidden=true;dialog.showModal();document.body.style.overflow='hidden'}));function close(){if(!motion){dialog.close();return;}const a=dialog.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(14px)'}],{duration:220,easing:'ease-in'});a.onfinish=()=>dialog.close();}dialog.addEventListener('close',()=>{document.body.style.overflow='';opener?.focus()});document.querySelector('.close-dialog').addEventListener('click',close);document.getElementById('finish-demo').addEventListener('click',close);dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}});const today=new Date();form.elements.date.min=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const d=new FormData(form);document.getElementById('enquiry-summary').textContent=`${d.get('origin')} → ${d.get('destination')} · ${d.get('cargo')} · ${Number(d.get('weight')).toLocaleString('en-US')} kg · ${d.get('date')}`;document.getElementById('form-view').hidden=true;document.getElementById('success-view').hidden=false;dialog.scrollTop=0;document.getElementById('finish-demo').focus();form.reset()});
 
@@ -106,3 +105,31 @@ const aboutSteps=[['Start with the shipment.','Cargo dimensions, weight, route a
 const aboutTabs=[...document.querySelectorAll('[data-about-step]')];
 function setAboutStep(i){aboutTabs.forEach((b,j)=>{b.setAttribute('aria-selected',String(i===j));b.tabIndex=i===j?0:-1});const p=document.getElementById('about-stage');p.setAttribute('aria-labelledby','about-tab-'+i);p.querySelector('.about-stage-number').textContent='0'+(i+1);p.querySelector('h4').textContent=aboutSteps[i][0];p.querySelector('p').textContent=aboutSteps[i][1];if(!matchMedia('(prefers-reduced-motion: reduce)').matches){p.getAnimations().forEach(a=>a.cancel());p.animate([{opacity:.25,transform:'translateY(7px)'},{opacity:1,transform:'translateY(0)'}],{duration:350,easing:'ease-out'})}}
 aboutTabs.forEach((b,i)=>{b.addEventListener('click',()=>setAboutStep(i));b.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%3;if(e.key==='ArrowLeft')n=(i+2)%3;if(e.key==='Home')n=0;if(e.key==='End')n=2;if(n!==undefined){e.preventDefault();setAboutStep(n);aboutTabs[n].focus()}})});
+
+
+// Enlarged views for the About us cargo photographs.
+const lightbox = document.getElementById('photo-lightbox');
+const lightboxImage = document.getElementById('lightbox-image');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const lightboxClose = lightbox.querySelector('.lightbox-close');
+let lightboxOpener;
+
+document.querySelectorAll('.about-photo-button').forEach(button => {
+  button.addEventListener('click', () => {
+    const image = button.querySelector('img');
+    lightboxOpener = button;
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = image.alt;
+    lightboxCaption.textContent = button.parentElement.querySelector('figcaption').textContent;
+    lightbox.showModal();
+    lightboxClose.focus();
+  });
+});
+lightboxClose.addEventListener('click', () => lightbox.close());
+lightbox.addEventListener('click', event => {
+  if (event.target === lightbox) lightbox.close();
+});
+lightbox.addEventListener('close', () => {
+  lightboxImage.removeAttribute('src');
+  lightboxOpener?.focus();
+});
